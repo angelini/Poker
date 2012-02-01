@@ -28,14 +28,18 @@ public class HandRank {
 		HandRank first_rank = new HandRank(first);
 		HandRank second_rank = new HandRank(second);
 		
-		if(first_rank.getLevel() > second_rank.getLevel()) {
+		return compareRanks(first_rank, second_rank);
+	}
+	
+	public static int compareRanks(HandRank first, HandRank second) throws TooFewCardsException {
+		if(first.getLevel() > second.getLevel()) {
 			return 0;
-		} else if(first_rank.getLevel() < second_rank.getLevel()) {
+		} else if(first.getLevel() < second.getLevel()) {
 			return 1;
 		}
 		
-		int[] first_values = first_rank.getValue();
-		int[] second_values = second_rank.getValue();
+		int[] first_values = first.getValue();
+		int[] second_values = second.getValue();
 		
 		for(int i = 0; i < first_values.length; i++) {
 			if(first_values[i] > second_values[i]) {

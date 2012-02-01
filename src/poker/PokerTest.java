@@ -36,14 +36,17 @@ public class PokerTest {
 		System.out.println("");
 		
 		try {
-			int result = HandRank.compareHands(hand1, hand2);
+			HandRank rank1 = new HandRank(hand1);
+			HandRank rank2 = new HandRank(hand2);
+			
+			int result = HandRank.compareRanks(rank1, rank2);
 			
 			if(result == 0) {
-				System.out.println("HAND 1 is the Winner!");
+				System.out.println("HAND 1 is the Winner! With a " + rank1.getRankName());
 			} else if(result == 1) {
-				System.out.println("HAND 2 is the Winner!");
+				System.out.println("HAND 2 is the Winner! With a " + rank2.getRankName());
 			} else if(result == -1) {
-				System.out.println("It is a tie!");
+				System.out.println("It is a tie! With " + rank1.getRankName());
 			}
 			
 		} catch (TooFewCardsException e) {
