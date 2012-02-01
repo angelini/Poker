@@ -71,9 +71,9 @@ public class HandRank {
 		
 		this.flush = this.detectFlush(suits);
 		this.straight = this.detectStraight(values);
-		this.pairs = this.detectPairs(values);
-		this.triples = this.detectTriples(values);
-		this.quads = this.detectQuads(values);
+		this.pairs = this.detectSimilar(values, 2);
+		this.triples = this.detectSimilar(values, 3);
+		this.quads = this.detectSimilar(values, 4);
 		
 		this.level = this.determineLevel();
 		this.value = this.determineValue(values);
@@ -251,51 +251,18 @@ public class HandRank {
 		return true;
 	}
 	
-	private int detectPairs(int[] values) {
+	private int detectSimilar(int[] values, int amount) {
 		Arrays.sort(values);
-		int pairs = 0;
+		int similar = 0;
 		
-		for(int i = 0; i < values.length - 1; i++) {
-			if(values[i] == values[i + 1]) {
-				pairs++;
+		for(int i = 0; i < values.length - (amount - 1); i++) {
+			if(countInArray(values, values[i]) == amount) {
+				similar++;
 				i++;
 			}
 		}
 		
-		return pairs;
-	}
-	
-	private int detectTriples(int[] values) {
-		Arrays.sort(values);
-		int triples = 0;
-		
-		for(int i = 0; i < values.length - 2; i++) {
-			if(values[i] == values[i + 1] 
-					&& values[i] == values[i + 2]) {
-				
-				triples++;
-				i += 2;
-			}
-		}
-		
-		return triples;
-	}
-	
-	private int detectQuads(int[] values) {
-		Arrays.sort(values);
-		int quads = 0;
-		
-		for(int i = 0; i < values.length - 3; i++) {
-			if(values[i] == values[i + 1] 
-					&& values[i] == values[i + 2] 
-					&& values[i] == values[i + 3]) {
-				
-				quads++;
-				i += 3;
-			}
-		}
-		
-		return quads;
+		return similar;
 	}
 	
 	public String getRankName() {
