@@ -33,6 +33,18 @@ public class PokerTest {
 			}
 		}
 		
+		/* Use for building a custom hand
+		try {
+			hand2.addCard(new Card(11, 0));
+			hand2.addCard(new Card(2, 0));
+			hand2.addCard(new Card(11, 1));
+			hand2.addCard(new Card(2, 0));
+			hand2.addCard(new Card(11, 2));
+		} catch (TooManyCardsException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		*/
+		
 		System.out.println("");
 		
 		try {
