@@ -1,4 +1,4 @@
-package poker;
+package mcgill.poker;
 
 public class Card {
 

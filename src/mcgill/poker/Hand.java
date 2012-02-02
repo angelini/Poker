@@ -1,4 +1,4 @@
-package poker;
+package mcgill.poker;
 
 import java.util.ArrayList;
 import java.util.Iterator;

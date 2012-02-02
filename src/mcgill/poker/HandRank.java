@@ -1,4 +1,4 @@
-package poker;
+package mcgill.poker;
 
 import java.util.Arrays;
 
