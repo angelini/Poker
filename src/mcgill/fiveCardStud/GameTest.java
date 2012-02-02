@@ -1,5 +1,7 @@
 package mcgill.fiveCardStud;
 
+import java.util.ArrayList;
+
 import mcgill.poker.Player;
 
 public class GameTest {
@@ -9,10 +11,10 @@ public class GameTest {
 	private static final int NUMBER_OF_PLAYERS = 5;
 
 	public static void main(String[] args) {
-		Player[] players = new Player[NUMBER_OF_PLAYERS];
+		ArrayList<Player> players = new ArrayList<Player>();
 		
 		for(int i = 0; i < NUMBER_OF_PLAYERS; i++) {
-			players[i] = new Player(STARTING_CASH);
+			players.add(new Player(STARTING_CASH));
 		}
 		
 		FiveCardStud game = new FiveCardStud(players);
