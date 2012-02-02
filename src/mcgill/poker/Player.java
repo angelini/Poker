@@ -2,11 +2,11 @@ package mcgill.poker;
 
 public class Player {
 
-	ChipStack chips;
-	Hand hand;
+	private int money;
+	private Hand hand;
 
-	public Player(ChipStack chips) {
-		this.chips = chips;
+	public Player(int money) {
+		this.money = money;
 	}
 	
 	public void addCard(Card card) throws TooManyCardsException {
@@ -21,16 +21,21 @@ public class Player {
 		return new HandRank(this.hand);
 	}
 	
-	public int addChips(Chip chip, int amount) {
-		return this.chips.addChips(chip, amount);
+	public int addMoney(int amount) {
+		this.money += amount;
+		return this.money;
 	}
 	
-	public int removeChips(Chip chip, int amount) throws TooFewChipsException {
-		return this.chips.removeChips(chip, amount);
+	public int removeMoney(int amount) throws OutOfMoneyException {
+		if(amount > this.money) {
+			throw new OutOfMoneyException();
+		}
+		
+		this.money -= amount;
+		return this.money;
 	}
 	
-	public int totalChips() {
-		return this.chips.totalChips();
-	}
-	
+	public int getTotalMoney() {
+		return this.money;
+	}	
 }
