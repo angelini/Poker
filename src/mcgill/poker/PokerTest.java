@@ -5,6 +5,36 @@ public class PokerTest {
 	public static void main(String[] args) {
 		Hand hand1 = new Hand();
 		Hand hand2 = new Hand();
+		
+		try {
+			hand1.addCard(new Card(5, 0));
+			hand1.addCard(new Card(2, 0));
+			hand1.addCard(new Card(3, 0));
+		} catch (TooManyCardsException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		
+		try {
+			hand2.addCard(new Card(11, 0));
+			hand2.addCard(new Card(11, 2));
+			hand2.addCard(new Card(11, 1));
+		} catch (TooManyCardsException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		
+		try {
+			int result = HandRank.compareHands(hand1, hand2, 2);
+			System.out.println("Result is: " + result);
+			
+		} catch (TooFewCardsException e) {
+			e.printStackTrace();
+		} catch (TooManyCardsException e) {
+			e.printStackTrace();
+		}
+		
+		/*
+		Hand hand1 = new Hand();
+		Hand hand2 = new Hand();
 		Deck deck = new Deck();
 		
 		deck.shuffle();
@@ -33,17 +63,6 @@ public class PokerTest {
 			}
 		}
 		
-		/* Use for building a custom hand
-		try {
-			hand2.addCard(new Card(11, 0));
-			hand2.addCard(new Card(2, 0));
-			hand2.addCard(new Card(11, 1));
-			hand2.addCard(new Card(2, 0));
-			hand2.addCard(new Card(11, 2));
-		} catch (TooManyCardsException e) {
-			throw new RuntimeException(e.getMessage());
-		}
-		*/
 		
 		System.out.println("");
 		
@@ -64,6 +83,7 @@ public class PokerTest {
 		} catch (TooFewCardsException e) {
 			throw new RuntimeException(e.getMessage());
 		}
+		*/
 	}
 	
 }

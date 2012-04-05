@@ -110,12 +110,16 @@ public class HandRank {
 				
 				this.level = this.determineLevel();
 				this.value = this.determineValue(values);
+				break;
+				
 			case 3:
 				this.pairs = this.detectSimilar(values, 2);
 				this.triples = this.detectSimilar(values, 3);
 				
 				this.level = this.determineLevel();
 				this.value = this.determineValue(values);
+				break;
+				
 			case 4:
 				this.pairs = this.detectSimilar(values, 2);
 				this.triples = this.detectSimilar(values, 3);
@@ -123,6 +127,8 @@ public class HandRank {
 				
 				this.level = this.determineLevel();
 				this.value = this.determineValue(values);
+				break;
+				
 			case 5:
 				this.flush = this.detectFlush(suits);
 				this.straight = this.detectStraight(values);
@@ -132,6 +138,7 @@ public class HandRank {
 				
 				this.level = this.determineLevel();
 				this.value = this.determineValue(values);
+				break;
 		}
 	}
 	
