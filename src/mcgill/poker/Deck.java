@@ -24,6 +24,8 @@ public class Deck {
 				this.deck.add(new Card(value, suit));
 			}
 		}
+		
+		Collections.shuffle(this.deck);
 	}
 	
 	public void shuffle() {

@@ -45,4 +45,8 @@ public class Hand implements Iterable<Card> {
 		return max;
 	}
 	
+	public Card cardAt(int index) {
+		return this.hand.get(index);
+	}
+	
 }

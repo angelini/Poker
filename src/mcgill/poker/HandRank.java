@@ -24,11 +24,45 @@ public class HandRank {
 	private int triples;
 	private int quads;
 	
-	public static int compareHands(Hand first, Hand second) throws TooFewCardsException {
-		HandRank first_rank = new HandRank(first);
-		HandRank second_rank = new HandRank(second);
+	public static int compareHands(Hand first, Hand second, int numCards) throws TooFewCardsException, TooManyCardsException {
+		Hand firstNew;	
+		Hand secondNew;
+		
+		if (numCards == 1) {
+			return compareCards(first.cardAt(1), second.cardAt(1));
+		} else if (numCards < 5) {
+			firstNew = new Hand();
+			secondNew = new Hand();
+			
+			for (int i = 1; i < first.getSize(); i++) {
+				firstNew.addCard(first.cardAt(i));
+				secondNew.addCard(second.cardAt(i));
+			}
+		} else {
+			firstNew = first;
+			secondNew = second;
+		}
+		
+		HandRank first_rank = new HandRank(firstNew);
+		HandRank second_rank = new HandRank(secondNew);
 		
 		return compareRanks(first_rank, second_rank);
+	}
+	
+	//returns 0 if first card has higher rank than second card and 1 if reversed or equal.
+	public static int compareCards(Card first, Card second) {
+		if (first.getValue() > second.getValue()) {
+			return 0;
+		} else if (first.getValue() < second.getValue()) {
+			return 1;
+		} else if (first.getSuit() > second.getSuit()) {
+			return 0;
+		} else if (first.getSuit() < second.getSuit()){
+			return 1;
+		} else {
+			return 1;
+		}
+		
 	}
 	
 	public static int compareRanks(HandRank first, HandRank second) throws TooFewCardsException {
@@ -53,15 +87,15 @@ public class HandRank {
 	}
 	
 	public HandRank(Hand hand) throws TooFewCardsException {
-		if(hand.getSize() != 5) {
+		if(hand.getSize() < 2) {
 			throw new TooFewCardsException();
 		}
 		
 		this.hand = hand;
 		
 		int i = 0;
-		int[] values = new int[5];
-		int[] suits = new int[5];
+		int[] values = new int[hand.getSize()];
+		int[] suits = new int[hand.getSize()];
 		
 		for(Card card : hand) {
 			values[i] = card.getValue();
@@ -69,14 +103,36 @@ public class HandRank {
 			i++;
 		}
 		
-		this.flush = this.detectFlush(suits);
-		this.straight = this.detectStraight(values);
-		this.pairs = this.detectSimilar(values, 2);
-		this.triples = this.detectSimilar(values, 3);
-		this.quads = this.detectSimilar(values, 4);
-		
-		this.level = this.determineLevel();
-		this.value = this.determineValue(values);
+		//used to evaluate multiple hand sizes 
+		switch (hand.getSize()) {
+			case 2:
+				this.pairs = this.detectSimilar(values, 2);
+				
+				this.level = this.determineLevel();
+				this.value = this.determineValue(values);
+			case 3:
+				this.pairs = this.detectSimilar(values, 2);
+				this.triples = this.detectSimilar(values, 3);
+				
+				this.level = this.determineLevel();
+				this.value = this.determineValue(values);
+			case 4:
+				this.pairs = this.detectSimilar(values, 2);
+				this.triples = this.detectSimilar(values, 3);
+				this.quads = this.detectSimilar(values, 4);
+				
+				this.level = this.determineLevel();
+				this.value = this.determineValue(values);
+			case 5:
+				this.flush = this.detectFlush(suits);
+				this.straight = this.detectStraight(values);
+				this.pairs = this.detectSimilar(values, 2);
+				this.triples = this.detectSimilar(values, 3);
+				this.quads = this.detectSimilar(values, 4);
+				
+				this.level = this.determineLevel();
+				this.value = this.determineValue(values);
+		}
 	}
 	
 	private int[] reverseIntArray(int[] values) {
